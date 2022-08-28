@@ -1,34 +1,37 @@
 import java.util.Random;
-import java.util.Scanner;
 
 public class MagicBox<T> {
     protected T[] items;
-    Scanner scanner = new Scanner(System.in);
 
     public MagicBox(int size) {
-        items = (T[]) new Object[size];
-        for (int i=0; i < size; i++) {
-            System.out.println("Введите " + (i + 1) + " элемент");
-            T input = (T) scanner.next();
-            items[i] = input;
-        }
-        pick();
-
+        this.items = (T[]) new Object[size];
     }
 
-    //public boolean add(T item) {
-
-    //}
+    public boolean add(T item) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == null) {
+                items[i] = item;
+                System.out.println("Добавлено: " + item);
+                return true;
+            }
+        }
+        return false;
+    }
 
     public T pick() {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == null) {
+                throw new RuntimeException("Нужно добавить еще " +
+                        (items.length - i) + " элемент(-а, -ов)");
+            }
+        }
 
-        int randomInt = 0;
+        // int randomInt = 0;
         Random random = new Random();
-        randomInt = random.nextInt(items.length);
-        System.out.println("Случайный элемент из коробки: "
-                        + items[randomInt]);
+        int randomInt = random.nextInt(items.length);
 
-        return null;
+
+        return items[randomInt];
     }
 
 
